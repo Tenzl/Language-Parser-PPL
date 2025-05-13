@@ -1,12 +1,16 @@
 function LoadingIndicator() {
   return (
-    <div className="flex justify-start">
-      <div className="w-full bg-gray-800 border border-gray-600 p-3 rounded-lg rounded-bl-none shadow-md">
-        <div className="flex items-center space-x-2">
-          <div className="h-2 w-2 bg-blue-400 rounded-full animate-bounce"></div>
-          <div className="h-2 w-2 bg-blue-400 rounded-full animate-bounce delay-75"></div>
-          <div className="h-2 w-2 bg-blue-400 rounded-full animate-bounce delay-150"></div>
-          <span className="text-sm text-gray-300">Converting...</span>
+    <div className="flex justify-start mb-6">
+      <div className="flex flex-col items-start max-w-[85%]">
+        <div className="chat-message-bot p-4 rounded-t-xl rounded-br-xl shadow-lg">
+          <div className="flex space-x-2 items-center">
+            <div className="flex space-x-1">
+              <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" style={{animationDelay: '0ms'}}></div>
+              <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse shadow-[0_0_8px_rgba(168,85,247,0.5)]" style={{animationDelay: '200ms'}}></div>
+              <div className="w-2 h-2 rounded-full bg-pink-400 animate-pulse shadow-[0_0_8px_rgba(236,72,153,0.5)]" style={{animationDelay: '400ms'}}></div>
+            </div>
+            <span className="text-sm text-gray-400">Converting to Java...</span>
+          </div>
         </div>
       </div>
     </div>

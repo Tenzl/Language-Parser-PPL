@@ -24,6 +24,16 @@ class projVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by projParser#forStmt.
+    def visitForStmt(self, ctx:projParser.ForStmtContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by projParser#rangeExp.
+    def visitRangeExp(self, ctx:projParser.RangeExpContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by projParser#asg.
     def visitAsg(self, ctx:projParser.AsgContext):
         return self.visitChildren(ctx)
@@ -94,6 +104,16 @@ class projVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by projParser#logicExp.
+    def visitLogicExp(self, ctx:projParser.LogicExpContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by projParser#compExp.
+    def visitCompExp(self, ctx:projParser.CompExpContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by projParser#addExp.
     def visitAddExp(self, ctx:projParser.AddExpContext):
         return self.visitChildren(ctx)
@@ -101,6 +121,11 @@ class projVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by projParser#mulExp.
     def visitMulExp(self, ctx:projParser.MulExpContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by projParser#unaryExp.
+    def visitUnaryExp(self, ctx:projParser.UnaryExpContext):
         return self.visitChildren(ctx)
 
 

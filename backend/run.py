@@ -3,7 +3,7 @@ import subprocess
 import unittest
 from antlr4 import *
 from AssignmentToJavaVisitor import AssignmentToJavaVisitor
-from tree_printer import parse_tree  # Import the new function
+from tree_printer import parse_tree
 
 # Define your variables
 DIR = os.path.dirname(__file__)

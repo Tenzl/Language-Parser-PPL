@@ -6,6 +6,7 @@ program: (stmt | NL)+ EOF;
 
 stmt: mainStmt 
     | whileStmt
+    | forStmt
     | ifStmt
     | funcStmt
     | asg
@@ -19,42 +20,56 @@ stmt: mainStmt
 
 whileStmt: WHILE exp COLON block;
 
-asg: ID EQUAL exp NL? ;
+forStmt: FOR ID IN rangeExp COLON block;
 
-ifStmt: IF exp COLON block elifStmt* elseStmt? ;
+rangeExp: RANGE '(' exp (',' exp (',' exp)?)? ')';
 
-elifStmt: ELIF exp COLON block ;
+asg: ID EQUAL exp NL?;
 
-elseStmt: ELSE COLON block ;
+ifStmt: IF exp COLON block elifStmt* elseStmt?;
 
-funcStmt: DEF ID '(' param? ')' COLON block ;
+elifStmt: ELIF exp COLON block;
 
-breakStmt: BREAK NL? ;
+elseStmt: ELSE COLON block;
 
-postfixStmt: ID postfix exp? NL? ;
+funcStmt: DEF ID '(' param? ')' COLON block;
 
-returnStmt: RETURN exp NL? ;
+breakStmt: BREAK NL?;
 
-mainStmt: IF MAIN COLON block ;
+postfixStmt: ID postfix exp? NL?;
 
-printStmt: PRINT '(' printArgs? ')' NL? ;
+returnStmt: RETURN exp NL?;
+
+mainStmt: IF MAIN COLON block;
+
+printStmt: PRINT '(' printArgs? ')' NL?;
 
 block: NL stmt+;
 
-callStmt: ID '(' exp? ')' NL? ;
+callStmt: ID '(' exp? ')' NL?;
 
-questStmt: verb obj article noun ;
+questStmt: verb obj article noun;
 
-exp: addExp (op=('>'|'<'|'=='|'!='|'<='|'>=') addExp)* ;
-addExp: mulExp (op=('+'|'-') mulExp)* ;
-mulExp: atom (op=('*'|'/') atom)* ;
-verb: ('show' | 'tell') ;
-obj: 'me' ;
-article: ('the' | 'an'| 'a') ;
-noun: ID ;
+// Expression hierarchy with logical operators
+exp: logicExp;
+logicExp: compExp (op=('and'|'or') compExp)*;
+compExp: addExp (op=('>'|'<'|'=='|'!='|'<='|'>=') addExp)*;
+addExp: mulExp (op=('+'|'-') mulExp)*;
+mulExp: unaryExp (op=('*'|'/') unaryExp)*;
+unaryExp: op=('not'|'-') unaryExp | atom;
+
+verb: ('show' | 'tell');
+obj: 'me';
+article: ('the' | 'an'| 'a');
+noun: ID;
 
 atom: NUMBER
+    | FLOAT
+    | TRUE
+    | FALSE
+    | NONE
     | ID '(' (exp (',' exp)*)? ')'
+    | ID postfix
     | ID
     | '(' exp ')'
     | STRING
@@ -64,9 +79,9 @@ MAIN: '__name__' WS* '==' WS* ('"__main__"'|'\'__main__\'') ;
 
 postfix: op=('--'|'++'|'+='|'-=');
 
-printArgs: exp (',' exp)* ;
+printArgs: exp (',' exp)*;
 
-param: ID (',' ID)* ;
+param: ID (',' ID)*;
 
 // Tokens
 
@@ -77,13 +92,20 @@ ELSE: 'else';
 COLON: ':';
 BREAK: 'break';
 WHILE: 'while';
+FOR: 'for';
+IN: 'in';
+RANGE: 'range';
 RETURN: 'return';
-PRINT: 'print' ;
+PRINT: 'print';
+TRUE: 'True';
+FALSE: 'False';
+NONE: 'None';
 
 STRING: '"' ( ~["\\\r\n] | '\\' . )* '"' 
       | '\'' ( ~['\\\r\n] | '\\' . )* '\'' ;
 ID: [a-zA-Z_][_a-zA-Z0-9]* ;
 EQUAL: '=' ;
 NUMBER: [0-9]+ ;
+FLOAT: [0-9]+ '.' [0-9]+ ;
 NL: ('\r'? '\n' [ \t]*) ;
 WS: [ \t]+ -> skip ;

@@ -40,7 +40,7 @@ function CodeConverter() {
         { id: tempId + 1, java: javaCode, sender: 'bot', timestamp: new Date().toISOString() },
       ]);
       setIsLoading(false);
-    }, 1000);
+    }, 500);
   };
 
   const handleKeyPress = (e) => {
@@ -56,34 +56,63 @@ function CodeConverter() {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full bg-gray-900 text-white font-sans">
+    <div className="flex flex-col min-h-screen w-full bg-white text-gray-800 font-sans">
       <Header />
 
-      {/* Messages */}
-      <div className="flex-1 p-2 overflow-y-auto space-y-4 bg-gray-900">
+      {/* Main content area with padding to prevent content from hiding under input */}
+      <div className="flex-1 overflow-y-auto p-4 pb-24 bg-white max-w-5xl mx-auto w-full">
+        {chat.length === 0 && (
+          <div className="flex items-center justify-center flex-col h-[50vh]">
+            <div className="text-center">
+              <h2 className="text-2xl font-medium mb-2">Welcome to Py2Ja Converter</h2>
+              <p className="text-gray-500 max-w-md mx-auto">
+                Enter your Python code below to convert it to Java.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Regular chat messages */}
         {chat.map((entry) => (
-          <div key={entry.id} className="space-y-2">
-            <Message 
-              entry={entry} 
-              copyStatus={copyStatus} 
-              handleCopy={handleCopy}
-              formatTimestamp={formatTimestamp}
-            />
+          <div key={entry.id} className={`w-full mb-6 ${entry.type === 'user' ? 'flex justify-end' : 'flex justify-start'}`}>
+            <div className={`max-w-[80%] ${entry.type === 'user' ? 'bg-blue-50' : 'bg-white'} p-4 rounded-2xl shadow-sm border border-gray-100`}>
+              <Message 
+                entry={entry} 
+                copyStatus={copyStatus} 
+                handleCopy={handleCopy}
+                formatTimestamp={formatTimestamp}
+              />
+              <div className="text-xs text-gray-400 mt-2">
+                {formatTimestamp(entry.timestamp)}
+                {entry.status && <span> · {entry.status}</span>}
+              </div>
+            </div>
           </div>
         ))}
 
-        {/* Loading */}
-        {isLoading && <LoadingIndicator />}
-        <div ref={chatEndRef} />
+        {/* Loading indicator */}
+        {isLoading && (
+          <div className="w-full mb-6 flex justify-start">
+            <div className="max-w-[80%] bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+              <LoadingIndicator />
+            </div>
+          </div>
+        )}
+        
+        <div ref={chatEndRef} className="h-4" />
       </div>
 
-      <ChatInput 
-        pythonCode={pythonCode}
-        setPythonCode={setPythonCode}
-        handleKeyPress={handleKeyPress}
-        handleSubmit={handleSubmit}
-        isLoading={isLoading}
-      />
+      {/* Input area - always at bottom */}
+      <div className={`w-full ${chat.length === 0 ? 'static py-4' : 'fixed bottom-0 left-0 right-0 py-4'} px-4 bg-white border-t border-gray-200 shadow-sm z-10`}>
+        <ChatInput 
+          pythonCode={pythonCode}
+          setPythonCode={setPythonCode}
+          handleKeyPress={handleKeyPress}
+          handleSubmit={handleSubmit}
+          isLoading={isLoading}
+          isEmpty={chat.length === 0}
+        />
+      </div>
     </div>
   );
 }
