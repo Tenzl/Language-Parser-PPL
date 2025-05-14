@@ -44,7 +44,6 @@ Run the frontend development server:
 3. Open the frontend URL in your browser.
 4. Enter Python code in the chat, send it, and receive the Java conversion.
 5. Use commands like
-   - `show output` — see the result of running your Python code.
    - show grammar — display the grammar or parse tree
    - show output — show the output of running your Python code
    - store the code — save the current code
