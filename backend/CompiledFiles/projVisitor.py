@@ -134,16 +134,6 @@ class projVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by projParser#obj.
-    def visitObj(self, ctx:projParser.ObjContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by projParser#article.
-    def visitArticle(self, ctx:projParser.ArticleContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by projParser#noun.
     def visitNoun(self, ctx:projParser.NounContext):
         return self.visitChildren(ctx)

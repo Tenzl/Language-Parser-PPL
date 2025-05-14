@@ -5,44 +5,54 @@ from CompiledFiles.projParser import projParser
 # Create a direct mapping from token types to names based on projLexer.tokens
 TOKEN_TYPE_MAP = {
     1: "'('",
-    2: "')'",
-    3: "'>'",
-    4: "'<'",
-    5: "'=='",
-    6: "'!='",
-    7: "'<='",
-    8: "'>='",
-    9: "'+'",
-    10: "'-'",
-    11: "'*'",
-    12: "'/'",
-    13: "'show'",
-    14: "'tell'",
-    15: "'me'",
-    16: "'the'",
-    17: "'an'",
-    18: "'a'",
-    19: "','",
-    20: "'--'",
-    21: "'++'",
-    22: "'+='",
-    23: "'-='",
-    24: "MAIN",
-    25: "DEF",
-    26: "IF",
-    27: "ELIF",
-    28: "ELSE",
-    29: "COLON",
-    30: "BREAK",
-    31: "WHILE",
-    32: "RETURN",
-    33: "PRINT",
-    34: "STRING",
-    35: "ID",
-    36: "EQUAL",
-    37: "NUMBER",
-    38: "NL",
-    39: "WS"
+    2: "','",
+    3: "')'",
+    4: "'and'",
+    5: "'or'",
+    6: "'>'",
+    7: "'<'",
+    8: "'=='",
+    9: "'!='",
+    10: "'<='",
+    11: "'>='",
+    12: "'+'",
+    13: "'-'",
+    14: "'*'",
+    15: "'/'",
+    16: "'not'",
+    17: "'show'",
+    18: "'tell'",
+    19: "'save'",
+    20: "'retrieve'",
+    21: "'get'",
+    22: "'store'",
+    23: "'--'",
+    24: "'++'",
+    25: "'+='",
+    26: "'-='",
+    27: "MAIN",
+    28: "DEF",
+    29: "IF",
+    30: "ELIF",
+    31: "ELSE",
+    32: "COLON",
+    33: "BREAK",
+    34: "WHILE",
+    35: "FOR",
+    36: "IN",
+    37: "RANGE",
+    38: "RETURN",
+    39: "PRINT",
+    40: "TRUE",
+    41: "FALSE",
+    42: "NONE",
+    43: "STRING",
+    44: "ID",
+    45: "EQUAL",
+    46: "NUMBER",
+    47: "FLOAT",
+    48: "NL",
+    49: "WS"
 }
 
 def parse_tree(tree, indent=0, prefix=""):
@@ -57,6 +67,9 @@ def parse_tree(tree, indent=0, prefix=""):
     Returns:
         str: The formatted parse tree as a string.
     """
+    if tree is None:
+        return ""
+
     # List to collect tree lines
     lines = []
     
@@ -66,12 +79,20 @@ def parse_tree(tree, indent=0, prefix=""):
     if isinstance(tree, TerminalNode):
         # Terminal node (e.g., token like 'count', '=', '1')
         token = tree.getSymbol()
+        if token is None:
+            return ""
+            
         token_type = token.type
+        token_text = token.text
         
+        # Skip whitespace and newline tokens
+        if token_type in [46, 47]:  # NL or WS
+            return ""
+            
         # Get token name from the map or use a default
         token_name = TOKEN_TYPE_MAP.get(token_type, f"UNKNOWN({token_type})")
             
-        lines.append(f"{indent_str}{prefix}Token: {token.text} (type: {token_name})")
+        lines.append(f"{indent_str}{prefix}Token: {token_text} (type: {token_name})")
     elif isinstance(tree, ParserRuleContext):
         # Rule node (e.g., program, stmt, asg)
         rule_name = projParser.ruleNames[tree.getRuleIndex()]
@@ -79,14 +100,18 @@ def parse_tree(tree, indent=0, prefix=""):
         
         # Process children
         children = list(tree.getChildren())
+        if not children:
+            return f"{indent_str}{prefix}Rule: {rule_name} (empty)"
+            
         for i, child in enumerate(children):
             # Determine prefix for child (e.g., ├── for intermediate, └── for last)
             is_last = i == len(children) - 1
             child_prefix = "└── " if is_last else "├── "
             # Recursively get child lines and extend the list
             child_lines = parse_tree(child, indent + 1, child_prefix)
-            lines.extend(child_lines.split("\n"))
+            if child_lines:  # Only add non-empty lines
+                lines.extend(child_lines.split("\n"))
     else:
         lines.append(f"{indent_str}{prefix}Unknown node: {tree}")
     
-    return "\n".join(lines)
+    return "\n".join(line for line in lines if line.strip())

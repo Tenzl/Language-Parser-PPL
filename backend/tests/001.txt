@@ -1,3 +1,1 @@
-while (x > 4):
-    q = x--
-    print(q)
+show me he the cv cc code

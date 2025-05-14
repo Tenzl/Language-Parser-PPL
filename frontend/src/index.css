@@ -1,3 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-gray-800;
+  }
+}
+
+@layer components {
+  .message-bubble {
+    @apply rounded-lg p-3 max-w-[70%];
+  }
+  
+  .user-message {
+    @apply bg-blue-500 text-white;
+  }
+  
+  .bot-message {
+    @apply bg-white text-gray-800 border border-gray-200;
+  }
+}
+
 :root {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   line-height: 1.5;

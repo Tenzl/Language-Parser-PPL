@@ -103,7 +103,7 @@ class AssignmentToJavaVisitor(projVisitor):
                 return "int"
             elif ctx.ID():
                 if ctx.postfix():
-                    return "int"  # Postfix operations typically work on numeric types
+                    return "int" 
                 if ctx.getChildCount() > 1 and ctx.getChild(1).getText() == '(':
                     # Function call, assume int return type
                     return "int"
@@ -286,4 +286,22 @@ class AssignmentToJavaVisitor(projVisitor):
 
     def visitQuestStmt(self, ctx):
         verb_text = ctx.verb().getText()
-        return "true" if verb_text == "show" else "false"
+        args = []
+        for noun in ctx.noun():
+            args.append(noun.getText())
+        
+        
+        # Handle show/tell commands
+        if verb_text in ["retrieve", "get"]:
+            return "1"  # Return code for showing parse tree
+        # Handle save command
+        elif verb_text in ["save", "store"]:
+            return "2"  # Return code for saving code
+        # Handle get saved code command
+        elif verb_text in ["show", "tell"]:
+            if 'output' in args:
+                return "4"  # show the output of the code
+            return "3"  # Return code for retrieving saved code
+        # Unknown command
+        else:
+            return "0"  # Return code for invalid command

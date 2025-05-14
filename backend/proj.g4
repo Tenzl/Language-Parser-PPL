@@ -48,7 +48,7 @@ block: NL stmt+;
 
 callStmt: ID '(' exp? ')' NL?;
 
-questStmt: verb obj article noun;
+questStmt: verb noun*;
 
 // Expression hierarchy with logical operators
 exp: logicExp;
@@ -58,9 +58,7 @@ addExp: mulExp (op=('+'|'-') mulExp)*;
 mulExp: unaryExp (op=('*'|'/') unaryExp)*;
 unaryExp: op=('not'|'-') unaryExp | atom;
 
-verb: ('show' | 'tell');
-obj: 'me';
-article: ('the' | 'an'| 'a');
+verb: ('show' | 'tell' | 'save' | 'retrieve' | 'get' | 'store');
 noun: ID;
 
 atom: NUMBER
