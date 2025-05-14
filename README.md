@@ -23,24 +23,17 @@ Project for theory class/
 - Java (for ANTLR code generation, if you need to re-generate parsers)
 
 ## Backend Setup (FastAPI)
-1. Install dependencies:
+Run the backend server:
    ```sh
    cd backend
-   ```
-2. Run the backend server:
-   ```sh
    uvicorn server:app --reload
    ```
    The backend will be available at `http://localhost:8000`.
 
 ## Frontend Setup (React + Vite)
-1. Install dependencies:
+Run the frontend development server:
    ```sh
    cd frontend
-   npm install
-   ```
-2. Run the frontend development server:
-   ```sh
    npm run dev
    ```
    The frontend will be available at the URL shown in your terminal (typically `http://localhost:5173`).
