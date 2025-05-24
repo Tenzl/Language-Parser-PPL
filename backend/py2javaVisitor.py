@@ -1,13 +1,13 @@
-from CompiledFiles.projVisitor import projVisitor
-from CompiledFiles.projLexer import projLexer
-from CompiledFiles.projParser import projParser
+from CompiledFiles.py2javaVisitor import py2javaVisitor
+from CompiledFiles.py2javaLexer import py2javaLexer
+from CompiledFiles.py2javaParser import py2javaParser
 
-class AssignmentToJavaVisitor(projVisitor):
+class py2javaVisitor(py2javaVisitor):
     def visitProgram(self, ctx):
         lines = []
         for i in range(ctx.getChildCount()):
             child = ctx.getChild(i)
-            if isinstance(child, projParser.StmtContext):
+            if isinstance(child, py2javaParser.StmtContext):
                 lines.append(self.visit(child))
             # Skip NL tokens
         return "\n".join(line for line in lines if line.strip())
@@ -72,25 +72,25 @@ class AssignmentToJavaVisitor(projVisitor):
         if not ctx:
             return "int"  # Default
 
-        if isinstance(ctx, projParser.ExpContext):
+        if isinstance(ctx, py2javaParser.ExpContext):
             return self.inferType(ctx.logicExp())
-        elif isinstance(ctx, projParser.LogicExpContext):
+        elif isinstance(ctx, py2javaParser.LogicExpContext):
             if ctx.op and (ctx.op.text == "and" or ctx.op.text == "or"):
                 return "boolean"
             return self.inferType(ctx.compExp(0))
-        elif isinstance(ctx, projParser.CompExpContext):
+        elif isinstance(ctx, py2javaParser.CompExpContext):
             if ctx.op:
                 return "boolean"
             return self.inferType(ctx.addExp(0))
-        elif isinstance(ctx, projParser.AddExpContext):
+        elif isinstance(ctx, py2javaParser.AddExpContext):
             return self.inferType(ctx.mulExp(0))
-        elif isinstance(ctx, projParser.MulExpContext):
+        elif isinstance(ctx, py2javaParser.MulExpContext):
             return self.inferType(ctx.unaryExp(0))
-        elif isinstance(ctx, projParser.UnaryExpContext):
+        elif isinstance(ctx, py2javaParser.UnaryExpContext):
             if ctx.op and ctx.op.text == "not":
                 return "boolean"
             return self.inferType(ctx.atom()) if ctx.atom() else self.inferType(ctx.unaryExp())
-        elif isinstance(ctx, projParser.AtomContext):
+        elif isinstance(ctx, py2javaParser.AtomContext):
             if ctx.STRING():
                 return "String"
             elif ctx.FLOAT():

@@ -1,61 +1,55 @@
 from antlr4 import ParserRuleContext, TerminalNode
-from CompiledFiles.projLexer import projLexer
-from CompiledFiles.projParser import projParser
+from CompiledFiles.py2javaLexer import py2javaLexer
+from CompiledFiles.py2javaParser import py2javaParser
 
 # Create a direct mapping from token types to names based on projLexer.tokens
 TOKEN_TYPE_MAP = {
-    1: "'('",
-    2: "','",
-    3: "')'",
-    4: "'and'",
-    5: "'or'",
-    6: "'>'",
-    7: "'<'",
-    8: "'=='",
-    9: "'!='",
-    10: "'<='",
-    11: "'>='",
-    12: "'+'",
-    13: "'-'",
-    14: "'*'",
-    15: "'/'",
-    16: "'not'",
-    17: "'show'",
-    18: "'tell'",
-    19: "'save'",
-    20: "'retrieve'",
-    21: "'get'",
-    22: "'store'",
-    23: "'--'",
-    24: "'++'",
-    25: "'+='",
-    26: "'-='",
-    27: "MAIN",
-    28: "DEF",
-    29: "IF",
-    30: "ELIF",
-    31: "ELSE",
-    32: "COLON",
-    33: "BREAK",
-    34: "WHILE",
-    35: "FOR",
-    36: "IN",
-    37: "RANGE",
-    38: "RETURN",
-    39: "PRINT",
-    40: "TRUE",
-    41: "FALSE",
-    42: "NONE",
-    43: "STRING",
-    44: "ID",
-    45: "EQUAL",
-    46: "NUMBER",
-    47: "FLOAT",
-    48: "NL",
-    49: "WS"
+    1: "LPAREN",
+    2: "COMMA",
+    3: "RPAREN",
+    4: "AND",
+    5: "OR",
+    6: "GT",
+    7: "LT",
+    8: "EQ",
+    9: "NEQ",
+    10: "LTE",
+    11: "GTE",
+    12: "PLUS",
+    13: "MINUS",
+    14: "MUL",
+    15: "DIV",
+    16: "NOT",
+    17: "DEC",
+    18: "INC",
+    19: "PLUSEQ",
+    20: "MINEQ",
+    21: "MAIN",
+    22: "DEF",
+    23: "IF",
+    24: "ELIF",
+    25: "ELSE",
+    26: "COLON",
+    27: "BREAK",
+    28: "WHILE",
+    29: "FOR",
+    30: "IN",
+    31: "RANGE",
+    32: "RETURN",
+    33: "PRINT",
+    34: "TRUE",
+    35: "FALSE",
+    36: "NONE",
+    37: "STRING",
+    38: "ID",
+    39: "EQUAL",
+    40: "NUMBER",
+    41: "FLOAT",
+    42: "NL",
+    43: "WS"
 }
 
-def parse_tree(tree, indent=0, prefix=""):
+def parse_tree_py(tree, indent=0, prefix=""):
     """
     Generate a pretty-printed ANTLR parse tree as a string.
     
@@ -95,7 +89,7 @@ def parse_tree(tree, indent=0, prefix=""):
         lines.append(f"{indent_str}{prefix}Token: {token_text} (type: {token_name})")
     elif isinstance(tree, ParserRuleContext):
         # Rule node (e.g., program, stmt, asg)
-        rule_name = projParser.ruleNames[tree.getRuleIndex()]
+        rule_name = py2javaParser.ruleNames[tree.getRuleIndex()]
         lines.append(f"{indent_str}{prefix}Rule: {rule_name}")
         
         # Process children
@@ -108,7 +102,7 @@ def parse_tree(tree, indent=0, prefix=""):
             is_last = i == len(children) - 1
             child_prefix = "└── " if is_last else "├── "
             # Recursively get child lines and extend the list
-            child_lines = parse_tree(child, indent + 1, child_prefix)
+            child_lines = parse_tree_py(child, indent + 1, child_prefix)
             if child_lines:  # Only add non-empty lines
                 lines.extend(child_lines.split("\n"))
     else:

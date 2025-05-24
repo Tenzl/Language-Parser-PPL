@@ -1,4 +1,4 @@
-grammar proj;
+grammar py2java;
 
 // Grammar rules
 
@@ -15,7 +15,6 @@ stmt: mainStmt
     | returnStmt
     | printStmt
     | callStmt
-    | questStmt
     ;
 
 whileStmt: WHILE exp COLON block;
@@ -48,8 +47,6 @@ block: NL stmt+;
 
 callStmt: ID '(' exp? ')' NL?;
 
-questStmt: verb noun*;
-
 // Expression hierarchy with logical operators
 exp: logicExp;
 logicExp: compExp (op=('and'|'or') compExp)*;
@@ -57,9 +54,6 @@ compExp: addExp (op=('>'|'<'|'=='|'!='|'<='|'>=') addExp)*;
 addExp: mulExp (op=('+'|'-') mulExp)*;
 mulExp: unaryExp (op=('*'|'/') unaryExp)*;
 unaryExp: op=('not'|'-') unaryExp | atom;
-
-verb: ('show' | 'tell' | 'save' | 'retrieve' | 'get' | 'store');
-noun: ID;
 
 atom: NUMBER
     | FLOAT
