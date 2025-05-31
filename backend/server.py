@@ -17,6 +17,7 @@ from commandVisitor import commandVisitor
 import json
 import os
 from typing import Optional
+import random
 
 app = FastAPI()
 
@@ -326,7 +327,7 @@ def handle_conversation_code(conversation_id, code):
             visitor = py2javaVisitor()
             java_code = visitor.visit(tree)
             return java_code
-        else:
+        elif direction == "javatopy":
             # Java to Python conversion
             input_stream = InputStream(code)
             lexer = java2pyLexer(input_stream)
@@ -348,11 +349,65 @@ def handle_conversation_code(conversation_id, code):
             visitor = java2pyVisitor()
             python_code = visitor.visit(tree)
             return python_code
+        
     except Exception as e:
         return {"error": str(e)}
 
 # Load contexts on startup
 load_conversation_contexts()
+
+def response_message(result):
+    if result == "0":
+        messages = [
+                "I've translated your code! Here's what I came up with:",
+                "Great code! I've converted it for you. Take a look:",
+                "All done with the conversion! Check out the result:"
+            ]
+        return random.choice(messages)
+    elif result == "savecode":
+        messages = [
+            "Code saved successfully for this conversation",
+            "I've saved your code. You can retrieve it later using the 'show saved code' command",
+            "Your code is now saved. Use 'show saved code' to view it anytime"
+        ]
+        return random.choice(messages)
+    elif result == "showsavedcode":
+        messages = [
+            "Here is your saved code:",
+            "I've retrieved your saved code. Here it is:",
+            "Here is the code you saved earlier:"
+        ]
+        return random.choice(messages)
+    elif result == "showgrammar":
+        messages = [
+            "Here is the parse tree for your code:",
+            "Let me show you the parse tree representation:",
+            "Take a look at the parse tree I generated:"
+        ]
+        return random.choice(messages)
+    elif result == "showoutput":
+        messages = [
+            "Here's what happened when I ran your code:",
+            "Check out what your code produced:",
+            "The execution results are in - take a look:"
+        ]
+        return random.choice(messages)
+    elif result == "javatopy":
+        messages = [
+            "Switched to Java to Python conversion mode for this conversation",
+            "I've switched to Java to Python mode for this conversation",
+            "Now ready to convert Java code to Python for this conversation"
+        ]
+        return random.choice(messages)
+    elif result == "pytojava":
+        messages = [
+            "Switched to Python to Java conversion mode for this conversation",
+            "I've switched to Python to Java mode for this conversation",
+            "Now ready to convert Python code to Java for this conversation"
+        ]   
+        return random.choice(messages)
+    else:
+        return "I'm sorry, I don't understand that command. Please try again."
 
 @app.post("/convert")
 async def convert_code(input_data: CodeInput):
@@ -376,17 +431,18 @@ async def convert_code(input_data: CodeInput):
         # If it's not a valid command and we have a direction set, try code conversion
         if result == "0":
             converted_code = handle_conversation_code(conversation_id, input_data.code)
+            
             return {
-                "result": converted_code, 
-                "type": "converted_code",
-                "message": "Here is your converted code:",
+                "result": converted_code,
+                "type": "converted_code", 
+                "message": response_message(result),
                 "conversation_id": conversation_id
             }
                 
         elif result == "savecode":  # Save current code for this conversation
             save_conversation_code(conversation_id)
             return {
-                "result": "Code saved successfully for this conversation", 
+                "result": response_message(result), 
                 "type": "message",
                 "conversation_id": conversation_id
             }
@@ -397,6 +453,7 @@ async def convert_code(input_data: CodeInput):
                 return {
                     "result": saved_code, 
                     "type": "code",
+                    "message": response_message(result),
                     "conversation_id": conversation_id
                 }
             else:
@@ -411,6 +468,7 @@ async def convert_code(input_data: CodeInput):
             return {
                 "result": code, 
                 "type": "grammar",
+                "message": response_message(result),
                 "conversation_id": conversation_id
             }
             
@@ -426,7 +484,7 @@ async def convert_code(input_data: CodeInput):
         elif result == "javatopy":  # Switch to Java to Python mode for this conversation
             set_conversation_direction(conversation_id, "javatopy")
             return {
-                "result": "Switched to Java to Python conversion mode for this conversation", 
+                "result": "I've switched to Java to Python mode for this conversation. You can now enter Java code and I'll convert it to Python.", 
                 "type": "message",
                 "conversation_id": conversation_id,
                 "direction": "javatopy"
@@ -435,7 +493,7 @@ async def convert_code(input_data: CodeInput):
         elif result == "pytojava":  # Switch to Python to Java mode for this conversation
             set_conversation_direction(conversation_id, "pytojava")
             return {
-                "result": "Switched to Python to Java conversion mode for this conversation", 
+                "result": "I've switched to Python to Java mode for this conversation. You can now enter Python code and I'll convert it to Java.", 
                 "type": "message",
                 "conversation_id": conversation_id,
                 "direction": "pytojava"

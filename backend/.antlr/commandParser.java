@@ -1,4 +1,4 @@
-// Generated from d:/Language-Parser-PPL-master (2)/Language-Parser-PPL-master/backend/command.g4 by ANTLR 4.13.1
+// Generated from d:/University/1 - Principle of Programming Language/Project for theory class/backend/command.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -149,12 +149,6 @@ public class commandParser extends Parser {
 		public VerbContext verb() {
 			return getRuleContext(VerbContext.class,0);
 		}
-		public List<SubjectContext> subject() {
-			return getRuleContexts(SubjectContext.class);
-		}
-		public SubjectContext subject(int i) {
-			return getRuleContext(SubjectContext.class,i);
-		}
 		public List<NounContext> noun() {
 			return getRuleContexts(NounContext.class);
 		}
@@ -179,63 +173,58 @@ public class commandParser extends Parser {
 		int _la;
 		try {
 			int _alt;
-			setState(42);
+			setState(36);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
-			case 1:
+			switch (_input.LA(1)) {
+			case T__0:
+			case T__1:
+			case T__2:
+			case T__3:
+			case T__4:
+			case T__5:
+			case T__6:
+			case T__7:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(28);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				while (_la==ID) {
-					{
-					{
-					setState(25);
-					subject();
-					}
-					}
-					setState(30);
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-				}
-				setState(31);
+				setState(25);
 				verb();
-				setState(35);
+				setState(29);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
 						{
-						setState(32);
+						setState(26);
 						noun();
 						}
 						} 
 					}
-					setState(37);
+					setState(31);
 					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+					_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 				}
-				setState(39);
+				setState(33);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==PYTHON || _la==JAVA) {
 					{
-					setState(38);
+					setState(32);
 					target();
 					}
 				}
 
 				}
 				break;
-			case 2:
+			case ID:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(41);
+				setState(35);
 				non_command();
 				}
 				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -264,7 +253,7 @@ public class commandParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(44);
+			setState(38);
 			match(ID);
 			}
 		}
@@ -285,6 +274,10 @@ public class commandParser extends Parser {
 		public TerminalNode ID(int i) {
 			return getToken(commandParser.ID, i);
 		}
+		public List<TerminalNode> TO() { return getTokens(commandParser.TO); }
+		public TerminalNode TO(int i) {
+			return getToken(commandParser.TO, i);
+		}
 		public Non_commandContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -294,11 +287,12 @@ public class commandParser extends Parser {
 	public final Non_commandContext non_command() throws RecognitionException {
 		Non_commandContext _localctx = new Non_commandContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_non_command);
+		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(47); 
+			setState(41); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -306,7 +300,7 @@ public class commandParser extends Parser {
 				case 1:
 					{
 					{
-					setState(46);
+					setState(40);
 					match(ID);
 					}
 					}
@@ -314,10 +308,24 @@ public class commandParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(49); 
+				setState(43); 
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
+			setState(48);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==TO) {
+				{
+				{
+				setState(45);
+				match(TO);
+				}
+				}
+				setState(50);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -524,39 +532,39 @@ public class commandParser extends Parser {
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0001\u0000\u0004\u0000\u0014\b\u0000\u000b\u0000\f\u0000\u0015"+
-		"\u0001\u0000\u0001\u0000\u0001\u0001\u0005\u0001\u001b\b\u0001\n\u0001"+
-		"\f\u0001\u001e\t\u0001\u0001\u0001\u0001\u0001\u0005\u0001\"\b\u0001\n"+
-		"\u0001\f\u0001%\t\u0001\u0001\u0001\u0003\u0001(\b\u0001\u0001\u0001\u0003"+
-		"\u0001+\b\u0001\u0001\u0002\u0001\u0002\u0001\u0003\u0004\u00030\b\u0003"+
-		"\u000b\u0003\f\u00031\u0001\u0004\u0001\u0004\u0001\u0005\u0001\u0005"+
+		"\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0005\u0001\u001c\b\u0001"+
+		"\n\u0001\f\u0001\u001f\t\u0001\u0001\u0001\u0003\u0001\"\b\u0001\u0001"+
+		"\u0001\u0003\u0001%\b\u0001\u0001\u0002\u0001\u0002\u0001\u0003\u0004"+
+		"\u0003*\b\u0003\u000b\u0003\f\u0003+\u0001\u0003\u0005\u0003/\b\u0003"+
+		"\n\u0003\f\u00032\t\u0003\u0001\u0004\u0001\u0004\u0001\u0005\u0001\u0005"+
 		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0007\u0001\u0007"+
 		"\u0001\b\u0001\b\u0001\b\u0000\u0000\t\u0000\u0002\u0004\u0006\b\n\f\u000e"+
 		"\u0010\u0000\u0002\u0001\u0000\u0001\b\u0001\u0000\n\u000b<\u0000\u0013"+
-		"\u0001\u0000\u0000\u0000\u0002*\u0001\u0000\u0000\u0000\u0004,\u0001\u0000"+
-		"\u0000\u0000\u0006/\u0001\u0000\u0000\u0000\b3\u0001\u0000\u0000\u0000"+
+		"\u0001\u0000\u0000\u0000\u0002$\u0001\u0000\u0000\u0000\u0004&\u0001\u0000"+
+		"\u0000\u0000\u0006)\u0001\u0000\u0000\u0000\b3\u0001\u0000\u0000\u0000"+
 		"\n5\u0001\u0000\u0000\u0000\f7\u0001\u0000\u0000\u0000\u000e;\u0001\u0000"+
 		"\u0000\u0000\u0010=\u0001\u0000\u0000\u0000\u0012\u0014\u0003\u0002\u0001"+
 		"\u0000\u0013\u0012\u0001\u0000\u0000\u0000\u0014\u0015\u0001\u0000\u0000"+
 		"\u0000\u0015\u0013\u0001\u0000\u0000\u0000\u0015\u0016\u0001\u0000\u0000"+
 		"\u0000\u0016\u0017\u0001\u0000\u0000\u0000\u0017\u0018\u0005\u0000\u0000"+
-		"\u0001\u0018\u0001\u0001\u0000\u0000\u0000\u0019\u001b\u0003\u0004\u0002"+
-		"\u0000\u001a\u0019\u0001\u0000\u0000\u0000\u001b\u001e\u0001\u0000\u0000"+
-		"\u0000\u001c\u001a\u0001\u0000\u0000\u0000\u001c\u001d\u0001\u0000\u0000"+
-		"\u0000\u001d\u001f\u0001\u0000\u0000\u0000\u001e\u001c\u0001\u0000\u0000"+
-		"\u0000\u001f#\u0003\b\u0004\u0000 \"\u0003\n\u0005\u0000! \u0001\u0000"+
-		"\u0000\u0000\"%\u0001\u0000\u0000\u0000#!\u0001\u0000\u0000\u0000#$\u0001"+
-		"\u0000\u0000\u0000$\'\u0001\u0000\u0000\u0000%#\u0001\u0000\u0000\u0000"+
-		"&(\u0003\f\u0006\u0000\'&\u0001\u0000\u0000\u0000\'(\u0001\u0000\u0000"+
-		"\u0000(+\u0001\u0000\u0000\u0000)+\u0003\u0006\u0003\u0000*\u001c\u0001"+
-		"\u0000\u0000\u0000*)\u0001\u0000\u0000\u0000+\u0003\u0001\u0000\u0000"+
-		"\u0000,-\u0005\f\u0000\u0000-\u0005\u0001\u0000\u0000\u0000.0\u0005\f"+
-		"\u0000\u0000/.\u0001\u0000\u0000\u000001\u0001\u0000\u0000\u00001/\u0001"+
-		"\u0000\u0000\u000012\u0001\u0000\u0000\u00002\u0007\u0001\u0000\u0000"+
-		"\u000034\u0007\u0000\u0000\u00004\t\u0001\u0000\u0000\u000056\u0005\f"+
-		"\u0000\u00006\u000b\u0001\u0000\u0000\u000078\u0003\u000e\u0007\u0000"+
-		"89\u0005\t\u0000\u00009:\u0003\u0010\b\u0000:\r\u0001\u0000\u0000\u0000"+
-		";<\u0007\u0001\u0000\u0000<\u000f\u0001\u0000\u0000\u0000=>\u0007\u0001"+
-		"\u0000\u0000>\u0011\u0001\u0000\u0000\u0000\u0006\u0015\u001c#\'*1";
+		"\u0001\u0018\u0001\u0001\u0000\u0000\u0000\u0019\u001d\u0003\b\u0004\u0000"+
+		"\u001a\u001c\u0003\n\u0005\u0000\u001b\u001a\u0001\u0000\u0000\u0000\u001c"+
+		"\u001f\u0001\u0000\u0000\u0000\u001d\u001b\u0001\u0000\u0000\u0000\u001d"+
+		"\u001e\u0001\u0000\u0000\u0000\u001e!\u0001\u0000\u0000\u0000\u001f\u001d"+
+		"\u0001\u0000\u0000\u0000 \"\u0003\f\u0006\u0000! \u0001\u0000\u0000\u0000"+
+		"!\"\u0001\u0000\u0000\u0000\"%\u0001\u0000\u0000\u0000#%\u0003\u0006\u0003"+
+		"\u0000$\u0019\u0001\u0000\u0000\u0000$#\u0001\u0000\u0000\u0000%\u0003"+
+		"\u0001\u0000\u0000\u0000&\'\u0005\f\u0000\u0000\'\u0005\u0001\u0000\u0000"+
+		"\u0000(*\u0005\f\u0000\u0000)(\u0001\u0000\u0000\u0000*+\u0001\u0000\u0000"+
+		"\u0000+)\u0001\u0000\u0000\u0000+,\u0001\u0000\u0000\u0000,0\u0001\u0000"+
+		"\u0000\u0000-/\u0005\t\u0000\u0000.-\u0001\u0000\u0000\u0000/2\u0001\u0000"+
+		"\u0000\u00000.\u0001\u0000\u0000\u000001\u0001\u0000\u0000\u00001\u0007"+
+		"\u0001\u0000\u0000\u000020\u0001\u0000\u0000\u000034\u0007\u0000\u0000"+
+		"\u00004\t\u0001\u0000\u0000\u000056\u0005\f\u0000\u00006\u000b\u0001\u0000"+
+		"\u0000\u000078\u0003\u000e\u0007\u000089\u0005\t\u0000\u00009:\u0003\u0010"+
+		"\b\u0000:\r\u0001\u0000\u0000\u0000;<\u0007\u0001\u0000\u0000<\u000f\u0001"+
+		"\u0000\u0000\u0000=>\u0007\u0001\u0000\u0000>\u0011\u0001\u0000\u0000"+
+		"\u0000\u0006\u0015\u001d!$+0";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -53,34 +53,46 @@ export const convertCode = async (code, conversationId = null) => {
           type: data.type || 'error'
         },
         type: 'error',
-        message: '',
+        message: data.message || 'An error occurred',
         conversationId: data.conversation_id || conversationId
       };
     }
     
+    // Handle different response types with appropriate messages
+    let responseMessage = data.message || '';
+    
+    // If no message is provided, generate a default based on type
+    if (!responseMessage && data.type) {
+      switch (data.type) {
+        case 'converted_code':
+          responseMessage = 'Code converted successfully!';
+          break;
+        case 'message':
+          responseMessage = data.result || 'Operation completed';
+          break;
+        case 'code':
+          responseMessage = 'Here is your saved code:';
+          break;
+        case 'grammar':
+          responseMessage = 'Here is the parse tree for your code:';
+          break;
+        case 'output':
+          responseMessage = data.message || 'Here is the output of your code:';
+          break;
+        default:
+          responseMessage = 'Operation completed successfully';
+      }
+    }
+    
     return {
-      result: data.result || data.converted_code || 'Conversion completed successfully',
+      result: data.result || data.converted_code || 'Operation completed successfully',
       type: data.type || 'converted_code',
-      message: data.message || '',
+      message: responseMessage,
       conversationId: data.conversation_id,
       direction: data.direction
     };
   } catch (error) {
     console.error('Error converting code:', error);
-    
-    // Fallback for demo purposes
-    if (code.toLowerCase().includes('python') || code.toLowerCase().includes('java')) {
-      return {
-        result: `// Converted code (demo mode - API not available)
-${code}
-
-// Note: This is a demo response. 
-// Connect to your backend API for actual code conversion.`,
-        type: 'converted_code',
-        message: 'Demo mode response',
-        conversationId: conversationId
-      };
-    }
     
     throw error;
   }

@@ -67,7 +67,7 @@ def runPythonTest(filename='001.txt'):
         sys.exit(1)
 
     try:
-        from py2javaVisitor import AssignmentToJavaVisitor
+        from py2javaVisitor import py2javaVisitor
         from CompiledFiles.py2javaLexer import py2javaLexer
         from CompiledFiles.py2javaParser import py2javaParser
     except ImportError as e:
@@ -101,7 +101,7 @@ def runPythonTest(filename='001.txt'):
     print(parse_tree_output)
 
     # Visit and print converted code
-    visitor = AssignmentToJavaVisitor()
+    visitor = py2javaVisitor()
     java_code = visitor.visit(tree)
     print("// Translated Java code:")
     print(java_code)

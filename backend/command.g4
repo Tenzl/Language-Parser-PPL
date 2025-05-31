@@ -2,11 +2,11 @@ grammar command;
 
 program: command+ EOF;
 
-command: subject* verb noun* target? | non_command;
+command: verb noun* target? | non_command;
 
 subject: ID;
 
-non_command: ID+;
+non_command: ID+ TO*;
 
 verb: ('show' | 'tell' | 'save' | 'retrieve' | 'get' | 'store'| 'translate'| 'see');
 noun: ID;

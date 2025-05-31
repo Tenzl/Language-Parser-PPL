@@ -294,13 +294,13 @@ function App() {
       case 'converted_code':
         return message ? `${message}\n\n${result}` : result
       case 'grammar':
-        return `Parse Tree:\n\n${result}`
+        return message ? `${message}\n\n${result}` : `Parse Tree:\n\n${result}`
       case 'output':
         return message ? `${message}\n\n${result}` : `Output:\n\n${result}`
       case 'message':
         return result
       case 'code':
-        return `Saved Code:\n\n${result}`
+        return message ? `${message}\n\n${result}` : `Saved Code:\n\n${result}`
       default:
         return result
     }

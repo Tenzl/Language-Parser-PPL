@@ -1,4 +1,4 @@
-// Generated from d:/Language-Parser-PPL-master (2)/Language-Parser-PPL-master/backend/py2java.g4 by ANTLR 4.13.1
+// Generated from d:/University/1 - Principle of Programming Language/Project for theory class/backend/py2java.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

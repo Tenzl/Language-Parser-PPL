@@ -9,8 +9,8 @@
             "name": "Debug ANTLR4 grammar",
             "type": "antlr-debug",
             "request": "launch",
-            "input": "backend/tests/001.txt",
-            "grammar": "backend/proj.g4",
+            "input": "backend/tests/003.txt",
+            "grammar": "backend/command.g4",
             "startRule": "program",
             "printParseTree": true,
             "visualParseTree": true
